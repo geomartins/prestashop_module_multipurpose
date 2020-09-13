@@ -14,7 +14,6 @@ class Multipurpose extends Module{
 
     }
 
-
     public function install(){
         return  parent::install() && $this->registerHook('displayHome'); //install and attach it to displayHome hook
     }
@@ -28,6 +27,7 @@ class Multipurpose extends Module{
         $this->context->smarty->assign(array(
             'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR')
         ));
+        
         
         //return 'This is the fucking random text from the module';
         return $this->display(__FILE__, 'views/templates/hook/home.tpl');
