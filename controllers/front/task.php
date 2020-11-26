@@ -32,12 +32,13 @@ class MultipurposeTaskModuleFrontController extends ModuleFrontController{
         
     }
 
-    public function loadProducts($start = 0, $length = 5){
+    public function loadProducts($start = 0, $length = 5, $sortby = 'id_product', $sortway = 'ASC'){
 
-        $nb = Db::getInstance()->value('SELECT COUNT(*) FROM `'._DB_PREFIX_.'product`');
+        $nb = Db::getInstance()->value('SELECT COUNT(*) FROM `'._DB_PREFIX_.'products`');
         $data = Db::getInstance()->executeS('SELECT p.`id_product`, p1.`name`, p.`price` FROM `'._DB_PREFIX_.'product` 
             LEFT JOIN  `'._DB_PREFIX_.'product_lang` p1 ON(p.`id_product` = p1.`id_product`) 
             WHERE p1.`id_lang` = '.(int)$this->context->language->id.'
+            ORDER BY `'.$sortby.'` '.$sortway.'
             LIMIT '.(int)$start.', '.(int)$length);
 
         return array(
