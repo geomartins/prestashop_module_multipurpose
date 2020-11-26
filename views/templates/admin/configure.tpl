@@ -10,8 +10,6 @@
 
             <br>
             <a href={$token}> {$token}</a>
-
-            {$token2}
             
        
     </div>

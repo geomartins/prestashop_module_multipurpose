@@ -19,4 +19,28 @@ class MultipurposeTaskModuleFrontController extends ModuleFrontController{
         ));
         $this->setTemplate('module:multipurpose/views/templates/front/task.tpl');
     }
+
+    public function setMedia(){
+        parent::setMedia();
+        $this->addJquery();
+        $this->addJs(_PS_MODULE_DIR_.'/multipurpose/views/js/jquery.dataTables.js');
+        $this->addJs(_PS_MODULE_DIR_.'/multipurpose/views/js/dataTables.bootstrap.js');
+        $this->addJs(_PS_MODULE_DIR_.'/multipurpose/views/js/task.js');
+
+        $this->addCSS(_PS_MODULE_DIR_.'/multipurpose/views/css/jquery.dataTables.css');
+        $this->addCSS(_PS_MODULE_DIR_.'/multipurpose/views/css/dataTables.bootstrap.css');
+        
+    }
+
+    public function loadProducts(){
+        return array(
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'data' => array(
+                
+            )
+
+
+        );
+    }
 }
