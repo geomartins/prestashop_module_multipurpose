@@ -23,19 +23,14 @@
     <table id="producttable" class="table table-hover">
         <thead>
             <tr>
-                <th> {l s='ID' mod='multipurpose'}</th>
-                <th> {l s='PRODUCT NAME' mod='multipurpose'}</th>
-            </tr>
-
-            <tr>
-              <td>Row 1 Data 1</td>
-              <td>Row 1 Data 2</td>
-            </tr>
-            <tr>
-                <td>Row 2 Data 1</td>
-                <td>Row 2 Data 2</td>
+                <th colspan="2> {l s='IDs' mod='multipurpose'}</th>
+                <th colspan="2"> {l s='Product Name' mod='multipurpose'}</th>
+                 <th colspan="2"> {l s='Price' mod='multipurpose'}</th>
             </tr>
         </thead>
+
+        <tbody>
+        </tbody>
     </table>
 
   
