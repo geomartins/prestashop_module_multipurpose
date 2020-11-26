@@ -59,8 +59,11 @@ class Multipurpose extends Module{
             Configuration::updateValue('MULTIPURPOSE_STR',$name); //if html, set third parameter as true
         }
 
+        
+
         $this->context->smarty->assign(array(
-            'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR')
+            'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR'),
+            'token' => $this->generateAdminToken(),
         ));
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }
@@ -114,6 +117,12 @@ class Multipurpose extends Module{
 
         return $html;
 
+    }
+
+    public function generateAdminToken(){
+       return $this->context->link->getAdminLink('AdminOrders');
+        
+        
     }
 
 }
