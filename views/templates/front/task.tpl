@@ -1,23 +1,23 @@
 {extends file='page.tpl'}
 
 {block name="page_content_container"}
-  <ul>
-      <li>{l s='Number of products' mod='multipurpose'} {$nb_product} </li>
+  
+    <div class="container">
+        <select name="cats" id="cats">
+           <option value=""> {l s='- Select -' mod='multipurpose'}</option>
+           {if isset($categories) && $categories}
+                {foreach from=$categories item=cat}
+                    <option value="{$cat['id_category']}"> {$cat['name']} </option>
+                {/foreach}
 
-      <li>
-         Categories
-         <ul>
-               <li>
-                  {foreach from=$categories item=cat}
-                        <li> {$cat['name']}</li>
-                  {/foreach}
-               </li>
-         </ul>
-      </li>
+           {/if}
+        </select>
+    
+    </div>
 
-      <li> {$shop_name}</li>
-      <li> {$manufacturer['name']}</li>
-  </ul>
+    <div class="ajax_products">
+        
+    </div>
 
   
 {/block}

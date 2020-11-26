@@ -1,4 +1,5 @@
 <?php
+use Language;
 
 class Multipurpose extends Module{
 
@@ -15,11 +16,13 @@ class Multipurpose extends Module{
     }
 
     public function install(){
-        return  parent::install() && $this->registerHook('displayHome'); //install and attach it to displayHome hook
+        include_once($this->local_path.'sql/install.php');
+        return  parent::install() && $this->registerHook('displayHome') && $this->installTab(); //install and attach it to displayHome hook
     }
 
     public function uninstall(){
-        return parent::uninstall();
+        include_once($this->local_path.'sql/uninstall.php');
+        return parent::uninstall() && $this->uninstallTab();
     }
 
     public function hookDisplayHome(){
@@ -34,6 +37,11 @@ class Multipurpose extends Module{
     }
 
     public function hookHeader(){  //[Head Section]
+
+        Media::addJsDef(array(
+            'mp_ajax' => $this->_path.'/ajax.php',
+        ));
+
         $this->context->controller->addCSS(array(
             $this->_path.'views/css/multipurpose.css'
         ));   
@@ -55,6 +63,57 @@ class Multipurpose extends Module{
             'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR')
         ));
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
+    }
+
+
+    private function installTab(){
+        $tabId = (int) Tab::getIdFromClassName('AdminOrigin');
+        if (!$tabId) {
+            $tabId = null;
+        }
+
+        $tab = new Tab($tabId);
+        $tab->active = 1;
+        $tab->class_name = 'AdminOrigin';
+        $tab->name = array();
+        foreach (Language::getLanguages() as $lang) {
+            $tab->name[$lang['id_lang']] = $this->l('Origin');
+        }
+        $tab->id_parent = (int) Tab::getIdFromClassName('ShopParameters');
+        $tab->module = $this->name;
+
+        return $tab->save();
+    }
+
+    private function uninstallTab()
+    {
+        $tabId = (int) Tab::getIdFromClassName('AdminOrigin');
+        if (!$tabId) {
+            return true;
+        }
+
+        $tab = new Tab($tabId);
+
+        return $tab->delete();
+    }
+
+
+    public function getProductByCategoryID($id_category){
+
+        $obj_cat = new Category($id_category, $this->context->language->id);
+        $products = $obj_cat->getProducts($this->context->language->id, 0, 1000);
+
+        $html = '<ol>';
+
+        foreach($products as $pr){
+            $html .= '<li>'.$pr['name'].'</li>';
+        }
+
+        $html .='</ol>';
+
+
+        return $html;
+
     }
 
 }
