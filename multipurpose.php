@@ -56,7 +56,9 @@ class Multipurpose extends Module{
 
         if(Tools::isSubmit('savemultipurposesting')){
             $name = Tools::getValue('print');
+            $customer_email = Tools::getValue('customer_email');
             Configuration::updateValue('MULTIPURPOSE_STR',$name); //if html, set third parameter as true
+            $this->sendTestEmail($customer_email);
         }
 
         
@@ -66,6 +68,26 @@ class Multipurpose extends Module{
             'token' => $this->generateAdminToken(),
         ));
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
+    }
+
+    public function sendTestEmail($email){
+        Mail::send(
+            $this->context->language->id,
+            'test',
+            $this->l('This is a test mail from tutorial series'),
+            array(
+                '{datetime}' => date('Y-m-d H:i:s') 
+            ),
+            $email,
+            'Prestashop User',
+            Configuration::get('PS_SHOP_EMAIL'),
+            Configuration::get('PS_SHOP_NAME'),
+            null,
+            null,
+            dirname(__file__).'/mails/'
+            
+        );
+
     }
 
 

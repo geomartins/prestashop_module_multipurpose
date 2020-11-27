@@ -7,6 +7,7 @@
     <div class="panel-body">
             <label for='print'> {l s='What to print' mod='multipurpose'}</label>
             <input type='text' name='print' id='print' value="{$MULTIPURPOSE_STR}" class="form-control"/>
+             <input type='text' name='customer_email' id='customer_email' value="" class="form-control"/>
 
             <br>
             <a href={$token}> {$token}</a>
