@@ -14,6 +14,7 @@
 
             {foreach from=$images_array item=ia}
                 {$ia} <br>
+                <img src="//{$ia}">
 
             {/foreach}
             
