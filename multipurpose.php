@@ -17,7 +17,10 @@ class Multipurpose extends Module{
 
     public function install(){
         include_once($this->local_path.'sql/install.php');
-        return  parent::install() && $this->registerHook('displayHome') && $this->installTab(); //install and attach it to displayHome hook
+        return  parent::install() 
+                && $this->registerHook('displayHome')
+                && $this->registerHook('displayAfterDescription')
+                && $this->installTab(); //install and attach it to displayHome hook
     }
 
     public function uninstall(){
@@ -157,6 +160,11 @@ class Multipurpose extends Module{
        return $this->context->link->getAdminLink('AdminOrders');
         
         
+    }
+
+
+    public function hookDisplayAfterDescription(){
+        return 'This is the hook from multipurpose module';
     }
 
 }
