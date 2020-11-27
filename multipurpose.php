@@ -62,10 +62,22 @@ class Multipurpose extends Module{
         }
 
         
+        $products = Product::getProducts($this->context->language->id, 0, 1000, 'id_product', 'ASC');
+        $images_array = array();
+        $link = new Link;
 
+        foreach($products as $p){
+            $images = Image::getImages($this->context->language->id, $p['id_product']);
+            $name = Db::getInstance()->getValue('SELECT `link_rewrite` FROM `'._DB_PREFIX_.'product_lang` WHERE `id_product` = '.(int)$p['id_product'].' AND `id_lang` = '.(int)$this->context->language->id);
+            foreach($images_array as $i){
+                $images_array[] = $link->getImageLink($name,$i['id_image'], 'home_default');
+            }
+           // echo '<pre>'; print_r($images_array); die;
+        }
         $this->context->smarty->assign(array(
             'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR'),
             'token' => $this->generateAdminToken(),
+            'images_array' => $images_array,
         ));
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }

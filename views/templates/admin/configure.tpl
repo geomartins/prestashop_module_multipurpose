@@ -11,6 +11,11 @@
 
             <br>
             <a href={$token}> {$token}</a>
+
+            {foreach from=$images_array item=ia}
+                {$ia} <br>
+
+            {/foreach}
             
        
     </div>
